@@ -1,0 +1,6 @@
+<?php
+
+/**
+ * Removal of the bouncer config option from the Sentora settings table.
+ */
+$zdbh->exec("DELETE FROM x_settings WHERE so_name_vc = 'bouncer_config';");

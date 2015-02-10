@@ -1,0 +1,13 @@
+<?php
+/**
+ * Install the bouncer configuration system option.
+ */
+$bouncer_conf = json_encode(array(
+    'enforcing' => true,
+    'whitelist' => false,
+    'blacklist' => false,
+    'whitelist_addresses' => [],
+    'blacklist_addresses' => [],
+));
+
+ctrl_options::SetSystemOption('bouncer_config', $bouncer_conf, true);
