@@ -3,9 +3,9 @@
  * Install the bouncer configuration system option.
  */
 $bouncer_conf = json_encode(array(
-    'enforcing' => true,
+    'enforcing' => false,
     'whitelist' => false,
-    'blacklist' => false,
+    'blacklist' => true,
     'whitelist_addresses' => [],
     'blacklist_addresses' => [],
 ));
