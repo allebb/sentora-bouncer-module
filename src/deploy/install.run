@@ -4,8 +4,8 @@
  */
 $bouncer_conf = json_encode(array(
     'enforcing' => false,
-    'whitelist' => false,
-    'blacklist' => true,
+    'whitelist_enabled' => false,
+    'blacklist_enabled' => true,
     'whitelist_addresses' => [],
     'blacklist_addresses' => [],
 ));
