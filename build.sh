@@ -15,7 +15,7 @@ fi
 
 echo "Compiling package..."
 cd src
-zip -r ../build/bouncer2.zpp *
+zip -r ../build/bouncer.zpp *
 cd ../asd
 echo "Package compilation complete!
 echo "The package can be found in the build/ directory!"
