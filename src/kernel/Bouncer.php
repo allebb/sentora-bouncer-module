@@ -104,7 +104,7 @@ class Bouncer
             return true;
         }
         if ($this->whitelist_enabled && in_array($address, $this->whitelist_addresses)) {
-            return true;
+            return false;
         }
     }
 }

@@ -8,5 +8,6 @@
  * @version 1.0.0
  */
 require_once __DIR__ . '/../kernel/Bouncer.php';
-$bouncer = Bouncer::getInstance(ctrl_options::GetSystemOption('bouncer_config'));
+$conf = json_decode(ctrl_options::GetSystemOption('bouncer_config'), true);
+$bouncer = Bouncer::getInstance($conf);
 $bouncer->gaurd();
