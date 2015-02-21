@@ -7,6 +7,6 @@
  * @license https://github.com/supared/sentora-bouncer/blob/master/LICENSE
  * @version 1.0.0
  */
-require_once 'kernel/Bouncer.php';
-$bouncer = new Bouncer(ctrl_options::GetSystemOption('bouncer_config'));
-$boucer->gaurd();
+require_once __DIR__ . '/../kernel/Bouncer.php';
+$bouncer = Bouncer::getInstance(ctrl_options::GetSystemOption('bouncer_config'));
+$bouncer->gaurd();
