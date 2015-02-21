@@ -6,8 +6,8 @@ $bouncer_conf = json_encode(array(
     'enforcing' => false,
     'whitelist_enabled' => false,
     'blacklist_enabled' => true,
-    'whitelist_addresses' => [],
-    'blacklist_addresses' => [],
+    'whitelist_addresses' => array(),
+    'blacklist_addresses' => array(),
 ));
 
 ctrl_options::SetSystemOption('bouncer_config', $bouncer_conf, true);
