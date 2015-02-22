@@ -6,44 +6,42 @@
             <@ ModuleName @>
         </div>
 
-        <div class="zmodule_desc" id="zmodule_desc_<@ ModuleName @>"><: This module enables you to blacklist (or white-list) IP addresses that can access you Sentora control panel.  :></p></div>
+        <div class="zmodule_desc" id="zmodule_desc_<@ ModuleName @>"><: This module enables you to blacklist (or whitelist) IP addresses that can access you Sentora control panel.  :></p></div>
 
     </div>
-    <textarea name="inNotice" id="inNotice" rows="3" cols="80" /><@ CurrentNoticeText @></textarea>
-<div class="zform_wrapper">
-    <h2><: Configuration :></h2>
-    <form action="./?module=bouncer&action=UpdateConf" method="post">
-        <table class="table table-striped">
-            <tr>
-                <th><: Enable Bouncer IP filter? :>:</th>
-                <td><input type="checkbox" name="enabled" id="enabled" value="1" checked="checked" /></td>
-            </tr>
-            <tr>
-                <th><: Enable whitelist enforcement? :>:</th>
-                <td><input type="checkbox" name="whitelist_enabled" id="whitelist_enabled" value="1" checked="checked" /></td>
-            </tr>
-            <tr>
-                <th><: Whitelist IP addresses :>:</th>
-                <td><textarea name="whitelist_addresses" id="whitelist_addresses" rows="3" cols="40" /></textarea>
-                    <br><small>IP addresses should be added on new lines.</small></td>
-            </tr>
-            <tr>
-                <th><: Enable blacklist enforcement? :>:</th>
-                <td><input type="checkbox" name="blacklist_enabled" id="blacklist_enabled" value="1" checked="checked" /></td>
-            </tr>
-            <tr>
-                <th><: Blacklist IP addresses :>:</th>
-                <td><textarea name="blacklist_addresses" id="blacklist_addresses" rows="3" cols="40" /></textarea>
-                    <br><small>IP addresses should be added on new lines.</small></td>
-            </tr>
-            <tr>
-                <th colspan="2" align="right">
-                    <button class="button-loader add-row btn btn-primary" type="submit" ><: Save changes :></button>
-                </th>
-            </tr>
-        </table>
-        <@ CSFR_Tag @>
-    </form>
-</div>
+    <div class="zform_wrapper">
+        <form action="./?module=bouncer&action=UpdateConf" method="post">
+            <table class="table table-striped">
+                <tr>
+                    <th><: Enable Bouncer IP filter :>:</th>
+                    <td><input type="checkbox" name="enabled" id="enabled" value="1" <@ IsEnabled @> /></td>
+                </tr>
+                <tr>
+                    <th><: Enable whitelist enforcement :>:</th>
+                    <td><input type="checkbox" name="whitelist_enabled" id="whitelist_enabled" value="1" <@ IsWhitelistEnabled @>/></td>
+                </tr>
+                <tr>
+                    <th><: Whitelist IP addresses :>:</th>
+                    <td><textarea name="whitelist_addresses" id="whitelist_addresses" rows="3" cols="40" /><@ WhitelistAddresses @></textarea>
+                        <br><small><: Multiple IP addresses should be added on new lines. :></small></td>
+                </tr>
+                <tr>
+                    <th><: Enable blacklist enforcement :>:</th>
+                    <td><input type="checkbox" name="blacklist_enabled" id="blacklist_enabled" value="1" <@ IsBlacklistEnabled @>/></td>
+                </tr>
+                <tr>
+                    <th><: Blacklist IP addresses :>:</th>
+                    <td><textarea name="blacklist_addresses" id="blacklist_addresses" rows="3" cols="40" /><@ BlacklistAddresses @></textarea>
+                        <br><small><: Multiple IP addresses should be added on new lines. :></small></td>
+                </tr>
+                <tr>
+                    <th colspan="2" align="right">
+                        <button class="button-loader add-row btn btn-primary" type="submit" ><: Save changes :></button>
+                    </th>
+                </tr>
+            </table>
+            <@ CSFR_Tag @>
+        </form>
+    </div>
 
 </div>

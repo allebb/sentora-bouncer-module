@@ -11,20 +11,38 @@
 class module_controller extends ctrl_module
 {
 
-    /**
-     * Template tag getter
-     * @global type $controller
-     * @return type
-     */
-    public static function getConfiguration()
+    public static function getIsEnabled()
     {
-        return array(
-            'enabled' => self::bouncerConfiguration()->getBouncerEnabled(),
-            'whitelist_enabled' => self::bouncerConfiguration()->getWhitelistEnabled(),
-            'blacklist_enabled' => self::bouncerConfiguration()->getBlacklistEnabled(),
-            'whitelist_addresses' => self::bouncerConfiguration()->getWhiteistAddresses(),
-            'blacklist_addresses' => self::bouncerConfiguration()->getBlackistAddresses(),
-        );
+        if (self::bouncerConfiguration()->getBouncerEnabled()) {
+            return 'checked="checked"';
+        }
+        return null;
+    }
+
+    public static function getIsWhitelistEnabled()
+    {
+        if (self::bouncerConfiguration()->getWhitelistEnabled()) {
+            return 'checked="checked"';
+        }
+        return null;
+    }
+
+    public static function getIsBlacklistEnabled()
+    {
+        if (self::bouncerConfiguration()->getBlacklistEnabled()) {
+            return 'checked="checked"';
+        }
+        return null;
+    }
+
+    public static function getWhitelistAddresses()
+    {
+        return implode(PHP_EOL, self::bouncerConfiguration()->getWhiteistAddresses());
+    }
+
+    public static function getBlacklistAddresses()
+    {
+        return implode(PHP_EOL, self::bouncerConfiguration()->getBlackistAddresses());
     }
 
     /**
@@ -37,11 +55,11 @@ class module_controller extends ctrl_module
         runtime_csfr::Protect();
         $formvars = $controller->GetAllControllerRequests('FORM');
         if (self::saveConfiguration(array(
-                'enforcing' => $formvars['enabled'],
-                'whitelist_enabled' => $formvars['whitelist_enabled'],
-                'blacklist_enabled' => $formvars['blacklist_enabled'],
-                'whitelist_addresses' => $formvars['whitelist_addresses'],
-                'blacklist_addresses' => $formvars['blacklist_addresses'],
+                'enforcing' => (boolean) $formvars['enabled'],
+                'whitelist_enabled' => (boolean) $formvars['whitelist_enabled'],
+                'blacklist_enabled' => (boolean) $formvars['blacklist_enabled'],
+                'whitelist_addresses' => preg_split('/\r\n|[\r\n]/', $formvars['whitelist_addresses']),
+                'blacklist_addresses' => preg_split('/\r\n|[\r\n]/', $formvars['blacklist_addresses']),
             ))) {
             header("location: ./?module=" . $controller->GetCurrentModule() . "&saved=true");
         } else {
@@ -68,6 +86,6 @@ class module_controller extends ctrl_module
      */
     private static function saveConfiguration(array $options)
     {
-        return ctrl_options::SetSystemOption('bouncer_config', json_encode($options), true);
+        return ctrl_options::SetSystemOption('bouncer_config', json_encode($options));
     }
 }

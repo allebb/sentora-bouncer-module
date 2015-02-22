@@ -74,7 +74,7 @@ class Bouncer
      */
     public function gaurd()
     {
-        if ($this->enforcing && $this->isClientDenied($_SERVER['REMOTE_ADDR'])) {
+        if ($this->getBouncerEnabled() && $this->isClientDenied($_SERVER['REMOTE_ADDR'])) {
             // We must stop this access!
             die('Your IP address has been denied by Sentora Bouncer!');
         }
@@ -100,12 +100,38 @@ class Bouncer
      */
     private function isClientDenied($address)
     {
-        if ($this->blacklist_enabled && in_array($address, $this->blacklist_addresses)) {
+        if ($this->getWhitelistEnabled()) {
+            return !$this->addressIsWhitelisted($address);
+        }
+        if ($this->getBlacklistEnabled()) {
+            return $this->addressIsBlacklisted($address);
+        }
+    }
+
+    /**
+     * Checks that the provided IP address is whitelisted.
+     * @param string $address
+     * @return boolean
+     */
+    private function addressIsWhitelisted($address)
+    {
+        if (in_array($address, $this->getWhiteistAddresses())) {
             return true;
         }
-        if ($this->whitelist_enabled && in_array($address, $this->whitelist_addresses)) {
-            return false;
+        return false;
+    }
+
+    /**
+     * Checks that the provided IP address is blacklisted.
+     * @param string $address
+     * @return boolean
+     */
+    private function addressIsBlacklisted($address)
+    {
+        if (in_array($address, $this->getBlackistAddresses())) {
+            return true;
         }
+        return false;
     }
 
     /**
@@ -141,7 +167,7 @@ class Bouncer
      */
     public function getWhiteistAddresses()
     {
-        return $this->blacklist_addresses;
+        return $this->whitelist_addresses;
     }
 
     /**
@@ -150,6 +176,6 @@ class Bouncer
      */
     public function getBlackistAddresses()
     {
-        return $this->whitelist_addresses;
+        return $this->blacklist_addresses;
     }
 }
