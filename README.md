@@ -8,6 +8,10 @@ Bouncer is a SentoraCP module to aid the 'lock down' a Sentora Server, it preven
 
 This tool is released under the [GPL v2 license](LICENSE).
 
+## Requirements
+
+This module will work on Sentora version 1.0.1+ and upwards.
+
 ## Installation
 
 You can install Bouncer by logging into your server and running the following commands:
