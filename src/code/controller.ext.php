@@ -11,38 +11,77 @@
 class module_controller extends ctrl_module
 {
 
+    /**
+     * The HTML to generate for HTML checkboxes that should be checked.
+     */
+    const CHECKBOX_ENABLED_HTML = "checked=\"checked\"";
+
+    /**
+     * Return the template placeholder result for the 'Bouncer enabled' checkbox.
+     * @return string
+     */
     public static function getIsEnabled()
     {
         if (self::bouncerConfiguration()->getBouncerEnabled()) {
-            return 'checked="checked"';
+            return self::CHECKBOX_ENABLED_HTML;
         }
         return null;
     }
 
+    /**
+     * Return the template placeholder result for the 'Whitelist enabled' checkbox.
+     * @return string
+     */
     public static function getIsWhitelistEnabled()
     {
         if (self::bouncerConfiguration()->getWhitelistEnabled()) {
-            return 'checked="checked"';
+            return self::CHECKBOX_ENABLED_HTML;
         }
         return null;
     }
 
+    /**
+     * Return the template placeholder result for the 'Blacklist enabled' checkbox.
+     * @return string
+     */
     public static function getIsBlacklistEnabled()
     {
         if (self::bouncerConfiguration()->getBlacklistEnabled()) {
-            return 'checked="checked"';
+            return self::CHECKBOX_ENABLED_HTML;
         }
         return null;
     }
 
+    /**
+     * Return the tempalte placeholder result for the current list of whitelist addresses.
+     * @return string
+     */
     public static function getWhitelistAddresses()
     {
         return implode(PHP_EOL, self::bouncerConfiguration()->getWhiteistAddresses());
     }
 
+    /**
+     * Return the tempalte placeholder result for the current list of blacklist addresses.
+     * @return string
+     */
     public static function getBlacklistAddresses()
     {
         return implode(PHP_EOL, self::bouncerConfiguration()->getBlackistAddresses());
+    }
+
+    /**
+     * Display any notice messages for the current request.
+     * @return string
+     */
+    public static function getResult()
+    {
+        if (isset($_REQUEST['saved']) && $_REQUEST['saved'] == 'true') {
+            return ui_sysmessage::shout(ui_language::translate("Configuration changes have been saved successfully!"), "zannounceok");
+        }
+        if (isset($_REQUEST['saved']) && $_REQUEST['saved'] == 'false') {
+            return ui_sysmessage::shout(ui_language::translate("An error occured and we changes to the Bouncer configuration could not be saved."), "zannounceerror");
+        }
     }
 
     /**
@@ -53,6 +92,7 @@ class module_controller extends ctrl_module
     {
         global $controller;
         runtime_csfr::Protect();
+        $res_state = "false";
         $formvars = $controller->GetAllControllerRequests('FORM');
         if (self::saveConfiguration(array(
                 'enforcing' => (boolean) $formvars['enabled'],
@@ -61,10 +101,9 @@ class module_controller extends ctrl_module
                 'whitelist_addresses' => preg_split('/\r\n|[\r\n]/', $formvars['whitelist_addresses']),
                 'blacklist_addresses' => preg_split('/\r\n|[\r\n]/', $formvars['blacklist_addresses']),
             ))) {
-            header("location: ./?module=" . $controller->GetCurrentModule() . "&saved=true");
-        } else {
-            header("location: ./?module=" . $controller->GetCurrentModule() . "&saved=error");
+            $res_state = "true";
         }
+        header("location: ./?module=" . $controller->GetCurrentModule() . "&saved=" . $res_state);
         exit;
     }
 

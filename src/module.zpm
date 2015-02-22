@@ -9,6 +9,7 @@
         <div class="zmodule_desc" id="zmodule_desc_<@ ModuleName @>"><: This module enables you to blacklist (or whitelist) IP addresses that can access you Sentora control panel.  :></p></div>
 
     </div>
+    <@ Result @>
     <div class="zform_wrapper">
         <form action="./?module=bouncer&action=UpdateConf" method="post">
             <table class="table table-striped">
