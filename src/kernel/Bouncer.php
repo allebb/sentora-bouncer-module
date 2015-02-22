@@ -107,4 +107,49 @@ class Bouncer
             return false;
         }
     }
+
+    /**
+     * Check to see Bouncer currently enforcing?
+     * @return boolean
+     */
+    public function getBouncerEnabled()
+    {
+        return $this->enforcing;
+    }
+
+    /**
+     * Check to see if the whitelist is enabled (Blacklist will therefore be disabled)
+     * @return boolean
+     */
+    public function getWhitelistEnabled()
+    {
+        return $this->whitelist_enabled;
+    }
+
+    /**
+     * Check to see if the blacklist is enabled (If whitelist is enabled this is disabled)
+     * @return boolean
+     */
+    public function getBlacklistEnabled()
+    {
+        return $this->blacklist_enabled;
+    }
+
+    /**
+     * Return the list of IP addresses that are on the white-list (allows to access)
+     * @return array
+     */
+    public function getWhiteistAddresses()
+    {
+        return $this->blacklist_addresses;
+    }
+
+    /**
+     * Return the list of IP addresses that are on the blacklist (denied access)
+     * @return array
+     */
+    public function getBlackistAddresses()
+    {
+        return $this->whitelist_addresses;
+    }
 }
