@@ -18,8 +18,13 @@ class module_controller extends ctrl_module
      */
     public static function getConfiguration()
     {
-        global $controller;
-
+        return array(
+            'enabled' => self::bouncerConfiguration()->getBouncerEnabled(),
+            'whitelist_enabled' => self::bouncerConfiguration()->getWhitelistEnabled(),
+            'blacklist_enabled' => self::bouncerConfiguration()->getBlacklistEnabled(),
+            'whitelist_addresses' => self::bouncerConfiguration()->getWhiteistAddresses(),
+            'blacklist_addresses' => self::bouncerConfiguration()->getBlackistAddresses(),
+        );
     }
 
     /**
@@ -31,14 +36,17 @@ class module_controller extends ctrl_module
         global $controller;
         runtime_csfr::Protect();
         $formvars = $controller->GetAllControllerRequests('FORM');
-        self::saveConfiguration(array(
-            'enforcing' => $formvars['enabled'],
-            'whitelist_enabled' => $formvars['whitelist_enabled'],
-            'blacklist_enabled' => $formvars['blacklist_enabled'],
-            'whitelist_addresses' => $formvars['whitelist_addresses'],
-            'blacklist_addresses' => $formvars['blacklist_addresses'],
-        ));
-        header("location: ./?module=" . $controller->GetCurrentModule() . "&saved=true");
+        if (self::saveConfiguration(array(
+                'enforcing' => $formvars['enabled'],
+                'whitelist_enabled' => $formvars['whitelist_enabled'],
+                'blacklist_enabled' => $formvars['blacklist_enabled'],
+                'whitelist_addresses' => $formvars['whitelist_addresses'],
+                'blacklist_addresses' => $formvars['blacklist_addresses'],
+            ))) {
+            header("location: ./?module=" . $controller->GetCurrentModule() . "&saved=true");
+        } else {
+            header("location: ./?module=" . $controller->GetCurrentModule() . "&saved=error");
+        }
         exit;
     }
 
@@ -46,7 +54,7 @@ class module_controller extends ctrl_module
      * Load the Bouncer configuration from the database.
      * @return Bouncer
      */
-    private static function loadConfiguration()
+    private static function bouncerConfiguration()
     {
         require_once __DIR__ . '/../kernel/Bouncer.php';
         $conf = json_decode(ctrl_options::GetSystemOption('bouncer_config'), true);

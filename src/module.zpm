@@ -16,23 +16,25 @@
         <table class="table table-striped">
             <tr>
                 <th><: Enable Bouncer IP filter? :>:</th>
-                <td></td>
+                <td><input type="checkbox" name="enabled" id="enabled" value="1" checked="checked" /></td>
             </tr>
             <tr>
                 <th><: Enable whitelist enforcement? :>:</th>
-                <td></td>
+                <td><input type="checkbox" name="whitelist_enabled" id="whitelist_enabled" value="1" checked="checked" /></td>
             </tr>
             <tr>
                 <th><: Whitelist IP addresses :>:</th>
-                <td></td>
+                <td><textarea name="whitelist_addresses" id="whitelist_addresses" rows="3" cols="40" /></textarea>
+                    <br><small>IP addresses should be added on new lines.</small></td>
             </tr>
             <tr>
                 <th><: Enable blacklist enforcement? :>:</th>
-                <td></td>
+                <td><input type="checkbox" name="blacklist_enabled" id="blacklist_enabled" value="1" checked="checked" /></td>
             </tr>
             <tr>
                 <th><: Blacklist IP addresses :>:</th>
-                <td></td>
+                <td><textarea name="blacklist_addresses" id="blacklist_addresses" rows="3" cols="40" /></textarea>
+                    <br><small>IP addresses should be added on new lines.</small></td>
             </tr>
             <tr>
                 <th colspan="2" align="right">
