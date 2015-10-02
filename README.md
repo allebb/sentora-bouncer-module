@@ -10,7 +10,7 @@ This tool is released under the [GPL v2 license](LICENSE).
 
 ## Requirements
 
-This module will work on Sentora version 1.0.1+ and upwards.
+This module requires Sentora version 1.0.1+ installed.
 
 ## Installation
 
@@ -19,7 +19,7 @@ You can install Bouncer by logging into your server and running the following co
 Firstly, you need to add the Supared module repository (unless you already have it added):
 
 ```
-zppy repo add zppy.supared.com
+zppy repo add zppy.bobbyallen.me
 zppy update
 ```
 
